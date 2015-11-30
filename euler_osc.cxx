@@ -12,34 +12,32 @@ int main(){
   const double pi = 3.14159;
   const double t1 = 20*pi;
   const double dt = pi/10;
-  const int M = t1/dt;
-  const int N = 2;
-  double yfwd[N];
-  yfwd[0] = 1.0;
-  yfwd[1] = 0.0;
-  double ffwd[N];
-  double xnum;
+  const int N = t1/dt;
+  double yfwd[2];
+  double ybwd[2];
+  yfwd[0] = ybwd[0] = 1.0;
+  yfwd[1] = ybwd[1] = 0.0;
+  double ynum;
   
-  
-//   for(int i=0; i<M; i++){
-//    xnum = cos(i*dt);
-//    
-//    cout << i*dt << "\t" << xnum << endl;
-//   }
-  
-  for(int j=0; j<N; j++){
-    for(int i=0; i<M; i++){
-    
-    ffwd[0]=-1.0*sin(i*dt);
-    ffwd[1]=-1.0*cos(i*dt);
+  double a;
+  double b;
 
-    yfwd[j] = yfwd[j] + dt*ffwd[j];
+  
+  for(int i=0; i<N; i++){
     
-    xnum = cos(i*dt);
+    a = yfwd[0];
+    yfwd[0] = yfwd[0] + dt*yfwd[1];					//Euler Forward
+    yfwd[1] = yfwd[1] - dt*a;
     
-    cout << i*dt << "\t" << xnum << "\t" << yfwd[0] << "\t" << yfwd[1] << endl;  
-    }
+    b = ybwd[0];
+    ybwd[0] = (ybwd[0] + dt*ybwd[1])/(1+pow(dt,2.0));			//Euler Backward
+    ybwd[1] = ybwd[1] - (dt*b+dt*dt*ybwd[1])/(1+pow(dt,2.0));
+    
+    ynum = cos(i*dt);							//Numerical
+    
+    cout << i*dt << "\t" << ynum << "\t" << yfwd[0] << "\t" << ybwd[0] << endl;  
   }
+  
   
  return 0; 
 }
