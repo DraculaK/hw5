@@ -10,9 +10,9 @@ int main(){
   
   const double t0 = 0.0;
   const double pi = 3.14159;
-  const double t1 = 20*pi;
-  const double dt = pi/10;
-  const int N = t1/dt;
+  const double t1 = pi/200000;
+  const double dt = pi/100;						//Schrittanzahl N=dt/t1=(pi/100)*(200000/pi)=2000
+  const int N = dt/t1;							//2000*pi/100=20*pi
   double yfwd[2];
   double ybwd[2];
   yfwd[0] = ybwd[0] = 1.0;
